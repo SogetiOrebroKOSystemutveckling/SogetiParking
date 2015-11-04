@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SogetiParking.MainPage">
+	<ContentPage.Content>
+		<StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label>Kallgarage vänster:</Label>
+				<Label Text="{Binding ColdGarageLeft}"></Label>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label>Kallgarage mitten:</Label>
+				<Label Text="{Binding ColdGarageCenter}"></Label>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label>Kallgarage höger:</Label>
+				<Label Text="{Binding ColdGarageRight}"></Label>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label>Varmgarage vänster:</Label>
+				<Label Text="{Binding WarmGarageLeft}"></Label>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label>Varmgarage höger:</Label>
+				<Label Text="{Binding WarmGarageRight}"></Label>
+			</StackLayout>
+		</StackLayout>
+		 
+	</ContentPage.Content>
+</ContentPage>

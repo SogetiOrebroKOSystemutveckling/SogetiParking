@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SogetiParking", "SogetiParking\SogetiParking.shproj", "{FB468409-B83E-4422-A0CE-00B7CA929D43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiParking.Droid", "Droid\SogetiParking.Droid.csproj", "{040E7F6F-350F-4AFE-B6C7-351A802228C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiParking.UITests", "UITests\SogetiParking.UITests.csproj", "{A3DE09AD-AF3D-4E2C-93C8-A1E0519DE0CF}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SogetiParking\SogetiParking.projitems*{040e7f6f-350f-4afe-b6c7-351a802228c9}*SharedItemsImports = 4
+		SogetiParking\SogetiParking.projitems*{fb468409-b83e-4422-a0ce-00b7ca929d43}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{040E7F6F-350F-4AFE-B6C7-351A802228C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{040E7F6F-350F-4AFE-B6C7-351A802228C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{040E7F6F-350F-4AFE-B6C7-351A802228C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{040E7F6F-350F-4AFE-B6C7-351A802228C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3DE09AD-AF3D-4E2C-93C8-A1E0519DE0CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3DE09AD-AF3D-4E2C-93C8-A1E0519DE0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3DE09AD-AF3D-4E2C-93C8-A1E0519DE0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3DE09AD-AF3D-4E2C-93C8-A1E0519DE0CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
