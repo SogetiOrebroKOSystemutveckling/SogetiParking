@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace SogetiParking
 {
@@ -8,7 +6,7 @@ namespace SogetiParking
 	{
 		public App ()
 		{
-			var mainPage = new SogetiParking.MainPage();
+			var mainPage = new MainPage();
 
 			mainPage.BindingContext = new MainPageViewModel();
 
