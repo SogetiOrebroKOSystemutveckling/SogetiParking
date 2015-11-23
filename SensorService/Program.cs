@@ -12,7 +12,7 @@ namespace SensorService
 		{
 			Console.WriteLine("Hello Kitty!");
 
-			using (WebApp.Start<Startup>("http://localhost:8080")) 
+            using (WebApp.Start<Startup>("http://192.168.1.144:8080")) 
 			{
 			    Console.ReadKey();
 			}

@@ -1,72 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Newtonsoft.Json;
 using Org.Json;
 using Xamarin.Forms;
 
 namespace SogetiParking
 {
-	public class MainPageViewModel
+	public class MainPageViewModel : INotifyPropertyChanged
 	{
-		public MainPageViewModel ()
+	    private List<ParkingLot> _garages;
+
+	    public MainPageViewModel ()
 		{
-			ColdGarageLeft = "Ledig";
-			ColdGarageCenter = "Upptagen";
-			ColdGarageRight = "Ledig";
-			WarmGarageLeft = "Upptagen";
-			WarmGarageRight = "Ledig";
+            RefreshCommand = new Command(() =>
+            {
+                Garages = GetGarages();
+            } );
 
 		    Garages = GetGarages();
 		}
 
-	    public List<Garage> Garages { get; set; } 
+	    public ICommand RefreshCommand { get; private set; }
 
-	    public List<Garage> GetGarages()
+	    public List<ParkingLot> Garages
 	    {
-	        var request = WebRequest.Create("http://localhost:8080/api/Sensor/GetSensors");
-	        request.ContentType = "application/json";
-	        request.Method = "GET";
-
-	        using (var response = request.GetResponse())
-	        using (var responseStream = response.GetResponseStream())
+	        get { return _garages; }
+	        set
 	        {
-	            var reader = new StreamReader(responseStream);
-	            var content = reader.ReadToEnd();
-
-	            return JsonConvert.DeserializeObject<List<Garage>>(content);
+	            _garages = value;
+                OnPropertyChanged();
 	        }
 	    }
 
-	    public string ColdGarageLeft { get; set; }
-		public string ColdGarageCenter { get; set; }
-		public string ColdGarageRight { get; set; }
-		public string WarmGarageLeft { get; set; }
-		public string WarmGarageRight { get; set; }
+	    public List<ParkingLot> GetGarages()
+	    {
+            var request = WebRequest.Create("http://192.168.1.144:8080/api/Sensor/GetSensors");
+	        request.ContentType = "application/json";
+	        request.Method = "GET";
+
+	        try
+	        {
+	            using (var response = request.GetResponse())
+	            using (var responseStream = response.GetResponseStream())
+	            {
+	                var reader = new StreamReader(responseStream);
+	                var content = reader.ReadToEnd();
+
+                    return JsonConvert.DeserializeObject<List<ParkingLot>>(content);
+	            }
+	        }
+	        catch (Exception z)
+	        {
+	            return null;
+	        }
+	    }
+
+	    public event PropertyChangedEventHandler PropertyChanged;
+
+	    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+	    {
+	        var handler = PropertyChanged;
+	        if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+	    }
 	}
-
-    public class Garage
-    {
-        public Garage(string name)
-        {
-            Name = name;
-            ParkingLots = new List<ParkingLot>();
-        }
-
-        public string Name { get; private set; }
-
-        public List<ParkingLot> ParkingLots { get; set; }
-    }
 
     public class ParkingLot
     {
-        public ParkingLot(string lotNumber)
+        public ParkingLot(string lotNumber, string garage)
         {
             LotNumber = lotNumber;
+            Garage = garage;
         }
 
         public bool IsFree { get; set; }
         public string LotNumber { get; set; }
+        public string Garage { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace SensorService
@@ -7,42 +8,30 @@ namespace SensorService
     {
         public IHttpActionResult GetSensors()
         {
-            var warmGarage = new Garage("Varmgarage");
-            warmGarage.ParkingLots.Add(new ParkingLot("99") { IsFree = true });
-            warmGarage.ParkingLots.Add(new ParkingLot("100") { IsFree = false });
+            var random = new Random();
 
-            var coldGarage = new Garage("Kallgarage");
-            coldGarage.ParkingLots.Add(new ParkingLot("51") { IsFree = true });
-            coldGarage.ParkingLots.Add(new ParkingLot("52") { IsFree = false });
-            coldGarage.ParkingLots.Add(new ParkingLot("53") { IsFree = true });
-
-            var garages = new List<Garage> {warmGarage, coldGarage};
-
-            return Ok(garages);
+            var parkingLots = new List<ParkingLot>
+            {
+                new ParkingLot("99", "warm") {IsFree = random.Next() % 2 == 0},
+                new ParkingLot("100", "warm") {IsFree = false},
+                new ParkingLot("51","cold") {IsFree = true},
+                new ParkingLot("52","cold") {IsFree = false},
+                new ParkingLot("53","cold") {IsFree = true}
+            };
+            return Ok(parkingLots);
         }
-    }
-
-    public class Garage
-    {
-        public Garage(string name)
-        {
-            Name = name;
-            ParkingLots = new List<ParkingLot>();
-        }
-
-        public string Name { get; private set; }
-
-        public List<ParkingLot> ParkingLots { get; set; }
     }
 
     public class ParkingLot
     {
-        public ParkingLot(string lotNumber)
+        public ParkingLot(string lotNumber, string garage)
         {
             LotNumber = lotNumber;
+            Garage = garage;
         }
 
         public bool IsFree { get; set; }
         public string LotNumber { get; set; }
+        public string Garage { get; set; }
     }
 }
