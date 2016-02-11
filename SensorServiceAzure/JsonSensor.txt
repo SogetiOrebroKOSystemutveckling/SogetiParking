@@ -1,0 +1,1 @@
+[{"IsFree":true,"SpaceNumber":"99","Garage":"warm"},{"IsFree":false,"SpaceNumber":"100","Garage":"warm"},{"IsFree":false,"SpaceNumber":"51","Garage":"cold"},{"IsFree":false,"SpaceNumber":"52","Garage":"cold"},{"IsFree":false,"SpaceNumber":"53","Garage":"cold"}]

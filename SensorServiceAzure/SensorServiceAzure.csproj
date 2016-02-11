@@ -33,6 +33,17 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="parkingDataConnectionString-Deployment" Order="1" xmlns="">
+          <Destination Path="Server=tcp:sogetiparking.database.windows.net,1433%3bDatabase=ParkingData%3bUser ID=parkeringsvakt%40sogetiparking%3bPassword={your_password_here}%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b" />
+          <Object Type="DbFullSql" Enabled="True">
+            <PreSource Path="Data Source=%28LocalDB%29\MSSQLLocalDB%3bAttachDbFilename=C:\Users\mcarlen\Documents\GitHub\SogetiParking\SensorServiceAzure\App_Data\ParkingData.mdf%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\parkingDataConnectionString-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,6 +52,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="sogetiparking" Order="1">
+          <Destination Path="Server=tcp:sogetiparking.database.windows.net,1433%3bDatabase=ParkingData%3bUser ID=parkeringsvakt%40sogetiparking%3bPassword=Jagvillparkeranu!%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b" />
+          <Object Type="DbFullSql" Enabled="False">
+            <PreSource Path="Data Source=%28LocalDB%29\MSSQLLocalDB%3bAttachDbFilename=C:\Users\mcarlen\Documents\GitHub\SogetiParking\SensorServiceAzure\App_Data\ParkingData.mdf%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Release\AutoScripts\sogetiparking_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -81,7 +104,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ParkingData.mdf" />
+    <Content Include="App_Data\ParkingData_log.ldf">
+      <DependentUpon>ParkingData.mdf</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
+    <Content Include="index.html" />
+    <Content Include="JsonSensor.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -89,24 +118,28 @@
     <Compile Include="Controllers\ParkingSpace.cs" />
     <Compile Include="Controllers\ParkingSpaceRegistration.cs" />
     <Compile Include="Controllers\SensorController.cs" />
+    <Compile Include="ErrorCode.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ParkingDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\SogetiParking.pubxml" />
     <None Include="Properties\PublishProfiles\SogetiParkingService - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\SogetiParkingService - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
