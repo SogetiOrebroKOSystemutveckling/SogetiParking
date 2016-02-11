@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Http;
 
@@ -10,30 +11,28 @@ namespace SensorServiceAzure.Controllers
 
         static SensorController()
         {
-            _parkingLot = new List<ParkingSpace>()
-            {
-                new ParkingSpace("99", "warm") {IsFree = false},
-                new ParkingSpace("100", "warm") {IsFree = false},
-                new ParkingSpace("51","cold") {IsFree = false},
-                new ParkingSpace("52","cold") {IsFree = false},
-                new ParkingSpace("53","cold") {IsFree = false}
-            };
+          
         }
 
         public IHttpActionResult GetSensors()
         {
-            return Ok(_parkingLot);
+            var a = ParkingDataRepository.GetParkingSpaces();
+            return Ok(a);
         }
 
         public IHttpActionResult PutParkingSpace(ParkingSpaceRegistration parkingSpaceRegistration)
         {
-            var parkingSpace = _parkingLot.SingleOrDefault(x => x.SpaceNumber == parkingSpaceRegistration.SpaceNumber);
+            var parkingLot = ParkingDataRepository.GetParkingSpaces();
+            var parkingSpace = parkingLot.SingleOrDefault(x => x.SpaceNumber == parkingSpaceRegistration.SpaceNumber);
             if (parkingSpace == null)
             {
                 return NotFound();
             }
+            var newValue = parkingSpaceRegistration.IsFree.ToString();
 
-            parkingSpace.IsFree = parkingSpaceRegistration.IsFree;
+            parkingSpace.IsFree = newValue;
+            ParkingDataRepository.StoreParkingEvent(parkingSpace);
+            
             return Ok();
         }
     }
