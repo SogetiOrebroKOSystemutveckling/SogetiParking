@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
+using Microsoft.Azure.NotificationHubs;
 
 namespace SensorServiceAzure.Controllers
 {
     public class SensorController : ApiController
     {
-        private static readonly List<ParkingSpace> _parkingLot;
-
         static SensorController()
         {
           
@@ -28,12 +28,29 @@ namespace SensorServiceAzure.Controllers
             {
                 return NotFound();
             }
+
+            if (parkingSpace.IsFree.ToLower() != parkingSpaceRegistration.IsFree.ToString().ToLower())
+            {
+                Notification.SendNew(parkingSpace.SpaceNumber, parkingSpaceRegistration.IsFree.ToString());
+            }
+
             var newValue = parkingSpaceRegistration.IsFree.ToString();
 
             parkingSpace.IsFree = newValue;
             ParkingDataRepository.StoreParkingEvent(parkingSpace);
             
             return Ok();
+        }
+    }
+
+    public static class Notification
+    {
+        public static async void SendNew(string spaceNumber, string status)
+        {
+            NotificationHubClient hub = NotificationHubClient
+        .CreateClientFromConnectionString("Endpoint=sb://sogetiparkingnotificationhub.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=sFVC+SZ6JlqBzo1W9wCrBRM9I/JAIyzGW554J+oiRGo=", "SogetiParkingNotificationHub");
+            var msg = spaceNumber + " is now " + status;
+            await hub.SendAdmNativeNotificationAsync(msg);
         }
     }
 }
